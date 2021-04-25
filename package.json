@@ -3,22 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^12.0.0",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
+    "kea": "^2.3.7",
+    "kea-loaders": "^0.4.0",
+    "kea-typegen": "^0.7.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "typescript": "^4.1.2",
+    "redux": "^4.1.0",
+    "reselect": "^4.0.0",
+    "sass": "^1.32.11",
+    "typescript": "^4.2.4",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "concurrently \"yarn run start:react\" \"yarn run start:typegen\" -n REACT,TYPEGEN -c blue,green",
+    "start:react": "react-scripts start",
+    "start:typegen": "kea-typegen watch",
+    "build": "yarn run build:typegen && yarn run build:react",
+    "build:react": "react-scripts build",
+    "build:typegen": "kea-typegen write",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -39,5 +44,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-router-dom": "^5.1.7",
+    "concurrently": "^6.0.2"
   }
 }

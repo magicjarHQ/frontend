@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Router } from "./Router";
+import { resetContext, getContext } from "kea";
+import { Provider } from "react-redux";
+// @ts-ignore
+import { loadersPlugin } from "kea-loaders";
 
-function App() {
+resetContext({
+  createStore: {
+    // options for redux (e.g. middleware, reducers, ...)
+  },
+  plugins: [
+    // additional kea plugins
+    loadersPlugin({}),
+  ],
+});
+
+function App(): JSX.Element {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={getContext().store}>
+      <div className="content-main">
+        <Router />
+      </div>
+    </Provider>
   );
 }
 
