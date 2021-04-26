@@ -1,6 +1,8 @@
 {
   "extends": ["react-app"],
   "rules": {
-    "react/self-closing-comp": "error"
+    "react/self-closing-comp": "error",
+    "no-unused-vars": ["error", { "ignoreRestSiblings": true }],
+    "no-shadow": "error"
   }
 }
