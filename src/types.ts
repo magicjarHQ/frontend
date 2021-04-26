@@ -11,3 +11,12 @@ export interface Contracts {
   dai: Contract | null;
   rDai: Contract | null;
 }
+
+interface BalanceAllowance {
+  balance?: string;
+  allowance?: string;
+}
+export interface BallancesAllowances {
+  dai: BalanceAllowance | null;
+  rDai: BalanceAllowance | null;
+}

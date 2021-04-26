@@ -10,7 +10,7 @@ export function India(): JSX.Element {
     "Let's help the fight the COVID crisis in India by temporarily staking part of our savings in @MagicJarHQ!";
 
   const { authenticate } = useActions(walletLogic);
-  const { authenticated } = useValues(walletLogic);
+  const { authenticated, balancesAllowances } = useValues(walletLogic);
 
   return (
     <>
@@ -23,7 +23,20 @@ export function India(): JSX.Element {
                 <>
                   {authenticated ? (
                     <>
-                      <Button>Deposit</Button> <Button>Withdraw</Button>
+                      <div className="my-stake">
+                        {balancesAllowances.rDai?.balance
+                          ? `You have staked $${balancesAllowances.rDai?.balance}`
+                          : "Calculating your stake..."}
+                      </div>
+                      <Button
+                        block
+                        style={{ width: "calc(50% - 4px)", marginRight: 8 }}
+                      >
+                        Deposit
+                      </Button>
+                      <Button block style={{ width: "calc(50% - 4px)" }}>
+                        Withdraw
+                      </Button>
                     </>
                   ) : (
                     <Button block onClick={authenticate}>

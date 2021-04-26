@@ -48,11 +48,18 @@
     text-align: center;
     max-width: 400px;
     padding: $default_spacing;
-    div {
+    > div {
       margin-bottom: $default_spacing;
       &:last-of-type {
         margin-bottom: 0;
       }
+    }
+
+    .my-stake {
+      background-color: white;
+      border-radius: $radius;
+      margin-bottom: $default_spacing;
+      padding: 8px;
     }
   }
   a {

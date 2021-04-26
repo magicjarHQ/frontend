@@ -5,7 +5,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import { dai } from "@studydefi/money-legos/erc20"; // ERC20 ABI
 import { rDAIABI } from "lib/rDAIABI";
 import { DEBUG, DEBUG_DAI_ADDRESS, NETWORK, RDAI_PROXY_CONTRACT } from "const";
-import { Contracts, Web3Provider } from "types";
+import { BallancesAllowances, Contracts, Web3Provider } from "types";
 import { walletLogicType } from "types/logics/walletLogicType";
 
 // Web3Modal provider options
@@ -19,7 +19,9 @@ const providerOptions = {
   },
 };
 
-export const walletLogic = kea<walletLogicType<Web3Provider, Contracts>>({
+export const walletLogic = kea<
+  walletLogicType<Web3Provider, Contracts, BallancesAllowances>
+>({
   actions: {
     updateProvider: (payload: Partial<Web3Provider>) => ({ payload }),
     updateContracts: (payload: Partial<Contracts>) => ({ payload }),
@@ -47,8 +49,44 @@ export const walletLogic = kea<walletLogicType<Web3Provider, Contracts>>({
       },
     ],
   },
+  loaders: ({ values }) => ({
+    balancesAllowances: [
+      { dai: null, rDai: null } as BallancesAllowances,
+      {
+        loadBalances: async () => {
+          // DAI
+          const DAIBalance = await values.contracts.dai?.methods
+            .balanceOf(values.address)
+            .call();
+          const DAIAllowance = await values.contracts.dai?.methods
+            .allowance(values.address, RDAI_PROXY_CONTRACT)
+            .call();
+
+          // rDAI
+          const rDAIBalance = await values.contracts.rDai?.methods
+            .balanceOf(values.address)
+            .call();
+          const rDAIAllowance = await values.contracts.rDai?.methods
+            .allowance(values.address, RDAI_PROXY_CONTRACT)
+            .call();
+
+          return {
+            dai: {
+              balance: values.provider.web3?.utils.fromWei(DAIBalance),
+              allowance: values.provider.web3?.utils.fromWei(DAIAllowance),
+            },
+            rDai: {
+              balance: values.provider.web3?.utils.fromWei(rDAIBalance),
+              allowance: values.provider.web3?.utils.fromWei(rDAIAllowance),
+            },
+          };
+        },
+      },
+    ],
+  }),
   listeners: ({ values, actions }) => ({
     authenticate: async () => {
+      // TODO: Loading state
       // Toggle modal
       const provider = await values.provider.modal?.connect();
       const web3 = new Web3(provider);
@@ -67,6 +105,7 @@ export const walletLogic = kea<walletLogicType<Web3Provider, Contracts>>({
       actions.setAddress(accounts[0]);
     },
     logout: async () => {
+      // TODO: Loading state
       if (
         values.provider.web3 &&
         values.provider.web3.currentProvider &&
@@ -79,6 +118,11 @@ export const walletLogic = kea<walletLogicType<Web3Provider, Contracts>>({
 
       actions.setAddress("");
       actions.updateProvider({ web3: null });
+    },
+    setAddress: async ({ address }) => {
+      if (address) {
+        actions.loadBalances();
+      }
     },
   }),
   selectors: {
