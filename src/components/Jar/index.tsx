@@ -19,7 +19,7 @@ export function Jar({ actions }: JarInterface): JSX.Element {
         </div>
         <div className="actions">{actions}</div>
         <div className="donation">
-          or <a href="#">donate</a> directly
+          or <a href="#donate">donate</a> directly
         </div>
       </div>
     </div>

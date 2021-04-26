@@ -10,8 +10,8 @@ export function Header(): JSX.Element {
         <span className="tagline">Support your causes by saving money</span>
       </div>
       <div className="actions">
-        <a href="#">Join Discord</a>
-        <a href="#">Create a Jar</a>
+        <a href="#discord">Join Discord</a>
+        <a href="#create">Create a Jar</a>
         <Button>Wallet Login</Button>
       </div>
     </div>
