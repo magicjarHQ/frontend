@@ -6,6 +6,8 @@ import { useState, useEffect } from "react"; // State management
 import { createContainer } from "unstated-next"; // Unstated-next containerization
 import WalletConnectProvider from "@walletconnect/web3-provider"; // WalletConnectProvider (Web3Modal)
 
+const MAINNET = false;
+
 // Web3Modal provider options
 const providerOptions = {
   walletconnect: {
@@ -18,8 +20,13 @@ const providerOptions = {
 };
 
 // Constants
-const RDAI_INDIA_RELIEF_HAT = 248;
-const RDAI_PROXY_CONTRACT = "0x261b45d85ccfeabb11f022eba346ee8d1cd488c0";
+const RDAI_INDIA_RELIEF_HAT = MAINNET ? 248 : 75; // Random testnet Hat
+const RDAI_PROXY_CONTRACT = MAINNET
+  ? "0x261b45d85ccfeabb11f022eba346ee8d1cd488c0"
+  : "0x462303f77a3f17Dbd95eb7bab412FE4937F9B9CB";
+const DAI_ADDRESS = MAINNET
+  ? dai.address
+  : "0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa";
 const MAX_UINT256 =
   "115792089237316195423570985008687907853269984665640564039457584007913129639935";
 
@@ -41,7 +48,7 @@ function useWeb3() {
   const setupWeb3Modal = () => {
     // Create new web3Modal
     const web3Modal = new Web3Modal({
-      network: "mainnet",
+      network: MAINNET ? "mainnet" : "kovan",
       cacheProvider: true,
       providerOptions: providerOptions,
     });
@@ -62,7 +69,7 @@ function useWeb3() {
     setWeb3(web3);
 
     // Collect contracts
-    const DAIContract = new web3.eth.Contract(dai.abi, dai.address);
+    const DAIContract = new web3.eth.Contract(dai.abi, DAI_ADDRESS);
     setDAIContract(DAIContract);
 
     const rDAIContract = new web3.eth.Contract(rDAIABI, RDAI_PROXY_CONTRACT);
