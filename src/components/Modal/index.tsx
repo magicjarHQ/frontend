@@ -5,12 +5,14 @@ export interface ModalInterface {
   children: JSX.Element;
   visible: boolean;
   onClose: () => void;
+  closable?: boolean;
 }
 
 export function Modal({
   children,
   visible,
   onClose,
+  closable = true,
 }: ModalInterface): JSX.Element {
   useEffect(() => {
     if (visible) {
@@ -24,7 +26,10 @@ export function Modal({
     <>
       {visible && (
         <>
-          <div className="modal-overlay" onClick={onClose} />
+          <div
+            className={`modal-overlay${closable ? " cursor-pointer" : ""}`}
+            onClick={() => closable && onClose()}
+          />
           <div className="modal">
             <div className="modal-inner">{children}</div>
           </div>

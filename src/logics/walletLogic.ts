@@ -4,7 +4,13 @@ import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { dai } from "@studydefi/money-legos/erc20"; // ERC20 ABI
 import { rDAIABI } from "lib/rDAIABI";
-import { DEBUG, DEBUG_DAI_ADDRESS, NETWORK, RDAI_PROXY_CONTRACT } from "const";
+import {
+  DEBUG,
+  DEBUG_DAI_ADDRESS,
+  NETWORK,
+  RDAI_INDIA_RELIEF_HAT,
+  RDAI_PROXY_CONTRACT,
+} from "const";
 import { BallancesAllowances, Contracts, Web3Provider } from "types";
 import { walletLogicType } from "types/logics/walletLogicType";
 
@@ -26,6 +32,7 @@ export const walletLogic = kea<
     updateProvider: (payload: Partial<Web3Provider>) => ({ payload }),
     updateContracts: (payload: Partial<Contracts>) => ({ payload }),
     setAddress: (address: string) => ({ address }),
+    setApprovedAmount: (amount: number) => ({ amount }),
     authenticate: true,
     logout: true,
   },
@@ -46,6 +53,12 @@ export const walletLogic = kea<
       "",
       {
         setAddress: (_, { address }) => address,
+      },
+    ],
+    approvedAmount: [
+      0,
+      {
+        setApprovedAmount: (_, { amount }) => amount,
       },
     ],
   },
@@ -83,15 +96,36 @@ export const walletLogic = kea<
         },
       },
     ],
-    // We don't really use the reducer value, but we still use a loader to simplify loading state logic
-    _daiApproval: [
-      false,
+    approvedAmount: [
+      0,
       {
-        approve: async ({ amount }: { amount: number | string }) => {
+        approve: async ({ amount }: { amount: string }) => {
+          if (amount <= (values.balancesAllowances.dai?.allowance || 0)) {
+            return parseFloat(amount);
+          }
           await values.contracts.dai?.methods
             .approve(
               RDAI_PROXY_CONTRACT,
               values.provider.web3?.utils.toWei(amount.toString(), "ether")
+            )
+            .send({
+              from: values.address,
+            });
+          return parseFloat(amount);
+        },
+      },
+    ],
+    _stakedAmount: [
+      false,
+      {
+        stake: async () => {
+          await values.contracts.rDai?.methods
+            .mintWithSelectedHat(
+              values.provider.web3?.utils.toWei(
+                values.approvedAmount.toString(),
+                "ether"
+              ),
+              RDAI_INDIA_RELIEF_HAT
             )
             .send({
               from: values.address,
@@ -144,12 +178,20 @@ export const walletLogic = kea<
     approveSuccess: async () => {
       actions.loadBalances();
     },
+    stakeSuccess: async () => {
+      actions.loadBalances();
+    },
   }),
   selectors: {
     authenticated: [(s) => [s.address], (address): boolean => !!address],
     loading: [
-      (s) => [s.balancesAllowancesLoading, s._daiApprovalLoading],
-      (balLoading, approvalLoading) => balLoading || approvalLoading,
+      (s) => [
+        s.balancesAllowancesLoading,
+        s.approvedAmountLoading,
+        s._stakedAmountLoading,
+      ],
+      (balLoading, approvalLoading, stakeLoading) =>
+        balLoading || approvalLoading || stakeLoading,
     ],
   },
   events: ({ actions }) => ({

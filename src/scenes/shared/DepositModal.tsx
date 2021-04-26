@@ -1,4 +1,5 @@
 import { Button, Input, Modal } from "components";
+import { Loader } from "components/Loader";
 import { ModalInterface } from "components/Modal";
 import { useActions, useValues } from "kea";
 import { walletLogic } from "logics/walletLogic";
@@ -6,10 +7,13 @@ import React, { useMemo, useState } from "react";
 import "./ActionModals.scss";
 
 export function DepositModal({
+  onClose,
   ...props
 }: Omit<ModalInterface, "children">): JSX.Element {
-  const { balancesAllowances, loading } = useValues(walletLogic);
-  const { approve } = useActions(walletLogic);
+  const { balancesAllowances, loading, approvedAmount } = useValues(
+    walletLogic
+  );
+  const { approve, setApprovedAmount, stake } = useActions(walletLogic);
   const [amount, setAmount] = useState("");
   const [touched, setTouched] = useState(false);
 
@@ -28,8 +32,13 @@ export function DepositModal({
     return "invalid";
   }, [touched, amount, balancesAllowances]);
 
+  const handleClose = () => {
+    setApprovedAmount(0);
+    onClose();
+  };
+
   return (
-    <Modal {...props}>
+    <Modal {...props} onClose={handleClose} closable={!loading}>
       <div className="deposit-modal">
         <h2>Deposit funds to help</h2>
         <div className="wallet-balance">
@@ -42,32 +51,49 @@ export function DepositModal({
             "Getting your wallet balance..."
           )}
         </div>
-        <div className="mt">
-          <Input
-            autoFocus
-            type="number"
-            value={amount}
-            onChange={(e) => {
-              setAmount(e.target.value);
-              setTouched(true);
-            }}
-            state={formState}
-            errorMessage={
-              parseFloat(amount) > (balancesAllowances.dai?.balance || 0)
-                ? "You don't have enough DAI on your wallet to deposit"
-                : undefined
-            }
-            disabled={loading}
-          />
-        </div>
-        <div className="text-right mt">
-          <Button
-            disabled={formState !== "valid" || loading}
-            onClick={() => approve({ amount })}
-          >
-            Continue
-          </Button>
-        </div>
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            {approvedAmount >= parseFloat(amount) ? (
+              <div className="mt">
+                Complete your deposit of ${amount}.
+                <div className="text-right mt">
+                  <Button disabled={loading} onClick={stake}>
+                    Stake ${amount}
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="mt">
+                <Input
+                  autoFocus
+                  type="number"
+                  value={amount}
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                    setTouched(true);
+                  }}
+                  state={formState}
+                  errorMessage={
+                    parseFloat(amount) > (balancesAllowances.dai?.balance || 0)
+                      ? "You don't have enough DAI on your wallet to deposit"
+                      : undefined
+                  }
+                  disabled={loading}
+                />
+                <div className="text-right mt">
+                  <Button
+                    disabled={formState !== "valid" || loading}
+                    onClick={() => approve({ amount })}
+                  >
+                    Continue
+                  </Button>
+                </div>
+              </div>
+            )}
+          </>
+        )}
 
         <div className="text-muted mt-2x">
           We currently only support DAI, but hope to support more tokens soon
