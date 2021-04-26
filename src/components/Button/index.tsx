@@ -3,14 +3,19 @@ import "./Button.scss";
 
 interface ButtonInterface
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children?: string | JSX.Element;
   block?: boolean;
+  icon?: JSX.Element;
+}
+
+interface LinkButtonInterface extends React.AnchorHTMLAttributes<HTMLElement> {
+  icon?: JSX.Element;
 }
 
 export function Button({
   children,
   block,
   className,
+  icon,
   ...props
 }: ButtonInterface): JSX.Element {
   return (
@@ -20,6 +25,7 @@ export function Button({
       }`}
       {...props}
     >
+      <span className="btn-icon">{icon}</span>
       {children}
     </button>
   );
@@ -28,10 +34,12 @@ export function Button({
 export function LinkButton({
   children,
   className,
+  icon,
   ...props
-}: React.LinkHTMLAttributes<HTMLElement>): JSX.Element {
+}: LinkButtonInterface): JSX.Element {
   return (
     <a className={`btn${className ? " " + className : ""}`} {...props}>
+      <span className="btn-icon">{icon}</span>
       {children}
     </a>
   );

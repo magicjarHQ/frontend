@@ -1,0 +1,20 @@
+@import "_vars";
+
+.footer {
+  text-align: center;
+  margin-bottom: 64px;
+  a {
+    color: $text_default;
+  }
+
+  .social {
+    margin-top: $default_spacing;
+    font-size: 1.1rem;
+    a {
+      margin-right: 12px;
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+}

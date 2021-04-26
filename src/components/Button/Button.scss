@@ -9,6 +9,14 @@
   border: 0;
   cursor: pointer;
   font-size: 0.85rem;
+  display: inline-flex;
+  text-decoration: none;
+  justify-content: center;
+
+  span {
+    margin-right: 4px;
+    margin-top: 2px;
+  }
 
   &.block {
     width: 100%;
