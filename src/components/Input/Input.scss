@@ -1,0 +1,40 @@
+@import "_vars";
+
+.mj-input {
+  font-size: 2.2em;
+  border: 1.5px solid $text_default;
+  border-radius: $radius;
+  font-weight: bold;
+  max-width: calc(100% - 8px);
+
+  &:focus {
+    outline: 1px;
+  }
+
+  &.valid {
+    border-color: $green;
+  }
+
+  &.invalid {
+    border-color: $red;
+  }
+}
+
+// Hide arrows on `input=number`
+/* Chrome, Safari, Edge, Opera */
+.mj-input::-webkit-outer-spin-button,
+.mj-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.mj-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.mj-input-error {
+  font-size: 0.85em;
+  color: $red;
+  min-height: 0.85em;
+}

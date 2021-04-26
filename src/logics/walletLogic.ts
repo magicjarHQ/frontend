@@ -83,6 +83,23 @@ export const walletLogic = kea<
         },
       },
     ],
+    // We don't really use the reducer value, but we still use a loader to simplify loading state logic
+    _daiApproval: [
+      false,
+      {
+        approve: async ({ amount }: { amount: number | string }) => {
+          await values.contracts.dai?.methods
+            .approve(
+              RDAI_PROXY_CONTRACT,
+              values.provider.web3?.utils.toWei(amount.toString(), "ether")
+            )
+            .send({
+              from: values.address,
+            });
+          return true;
+        },
+      },
+    ],
   }),
   listeners: ({ values, actions }) => ({
     authenticate: async () => {
@@ -124,9 +141,16 @@ export const walletLogic = kea<
         actions.loadBalances();
       }
     },
+    approveSuccess: async () => {
+      actions.loadBalances();
+    },
   }),
   selectors: {
     authenticated: [(s) => [s.address], (address): boolean => !!address],
+    loading: [
+      (s) => [s.balancesAllowancesLoading, s._daiApprovalLoading],
+      (balLoading, approvalLoading) => balLoading || approvalLoading,
+    ],
   },
   events: ({ actions }) => ({
     afterMount: () => {

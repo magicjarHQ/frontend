@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col } from "react-grid-system";
 import { Button, Jar, LinkButton } from "components";
 import { IconTwitter } from "components/icons";
 import { useActions, useValues } from "kea";
 import { walletLogic } from "logics/walletLogic";
+import { DepositModal } from "scenes/shared/DepositModal";
+
+type modalStateType = null | "deposit" | "withdraw";
 
 export function India(): JSX.Element {
   const TWITTER_SHARE_COPY =
@@ -11,6 +14,7 @@ export function India(): JSX.Element {
 
   const { authenticate } = useActions(walletLogic);
   const { authenticated, balancesAllowances } = useValues(walletLogic);
+  const [modalState, setModalState] = useState(null as modalStateType);
 
   return (
     <>
@@ -29,12 +33,15 @@ export function India(): JSX.Element {
                           : "Calculating your stake..."}
                       </div>
                       <Button
-                        block
                         style={{ width: "calc(50% - 4px)", marginRight: 8 }}
+                        onClick={() => setModalState("deposit")}
                       >
                         Deposit
                       </Button>
-                      <Button block style={{ width: "calc(50% - 4px)" }}>
+                      <Button
+                        style={{ width: "calc(50% - 4px)" }}
+                        onClick={() => setModalState("withdraw")}
+                      >
                         Withdraw
                       </Button>
                     </>
@@ -87,6 +94,9 @@ export function India(): JSX.Element {
           </Col>
         </Row>
       </Container>
+      {modalState === "deposit" && (
+        <DepositModal visible onClose={() => setModalState(null)} />
+      )}
     </>
   );
 }

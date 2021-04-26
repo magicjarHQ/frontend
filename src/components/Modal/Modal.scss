@@ -1,0 +1,24 @@
+@import "_vars";
+
+.modal-overlay {
+  background-color: rgba(#585858, 0.9);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: $z_modal_overlay;
+  cursor: pointer;
+}
+.modal {
+  background-color: white;
+  border-radius: $radius;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: $z_modal_content;
+  padding: $default_spacing * 2;
+  min-width: 320px;
+  text-align: center;
+}

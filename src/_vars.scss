@@ -1,7 +1,9 @@
 // Colors
 $text_default: #454545;
+$text_muted: #939393;
 $button_dafault: #1c1c1c;
 $green: #08a985;
+$red: #eb3a45;
 
 // Visual styles
 $radius: 6px;
@@ -18,3 +20,7 @@ $md: 768px;
 $lg: 992px;
 $xl: 1200px;
 $xxl: 1400px;
+
+// Z indexes
+$z_modal_overlay: 600;
+$z_modal_content: 640;

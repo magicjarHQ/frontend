@@ -17,6 +17,12 @@
     text-decoration: none;
   }
 
+  &:disabled {
+    background-color: lighten($button_dafault, 40%);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
   span {
     margin-right: 4px;
     margin-top: 2px;
