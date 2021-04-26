@@ -1,0 +1,51 @@
+@import "_vars";
+
+.jar-container {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, #d9f4f0 0%, #f0fff3 100%);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .the-jar {
+    margin-top: $default_spacing * 2;
+    background-position: center;
+    background-size: contain;
+    background-image: url("/assets/images/jar.svg");
+    background-repeat: no-repeat;
+    height: 100%;
+    min-height: 280px;
+    width: 400px;
+    position: relative;
+
+    .total-stake {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 23%;
+      font-weight: bold;
+      text-align: center;
+      color: $green;
+      .amount {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  .jar-inner {
+    text-align: center;
+    max-width: 400px;
+    padding: $default_spacing;
+    div {
+      margin-bottom: $default_spacing;
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+  a {
+    color: $green;
+  }
+}

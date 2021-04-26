@@ -17,3 +17,15 @@ body {
 .mt {
   margin-top: $default_spacing;
 }
+
+.mb {
+  margin-bottom: $default_spacing;
+}
+
+.mt-2x {
+  margin-top: $default_spacing * 2;
+}
+
+.mb-2x {
+  margin-bottom: $default_spacing * 2;
+}
