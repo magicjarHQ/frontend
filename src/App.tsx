@@ -4,6 +4,8 @@ import { resetContext, getContext } from "kea";
 import { Provider } from "react-redux";
 // @ts-ignore
 import { loadersPlugin } from "kea-loaders";
+import "./global.scss";
+import { Header } from "./components";
 
 resetContext({
   createStore: {
@@ -18,7 +20,8 @@ resetContext({
 function App(): JSX.Element {
   return (
     <Provider store={getContext().store}>
-      <div className="content-main">
+      <Header />
+      <div className="main">
         <Router />
       </div>
     </Provider>

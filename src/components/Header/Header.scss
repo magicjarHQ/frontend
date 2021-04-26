@@ -1,0 +1,39 @@
+@import "_vars";
+
+.header {
+  margin-top: 32px;
+  margin-right: 64px;
+  margin-left: 64px;
+  width: calc(100% - 128px);
+  height: 50px;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+
+  .header-main {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    span {
+      margin-left: $default_spacing / 2;
+    }
+  }
+
+  a {
+    color: $text_default;
+    text-decoration: none;
+  }
+
+  .actions {
+    & > a {
+      margin-right: $default_spacing * 2;
+    }
+  }
+
+  @media only screen and (max-width: $lg) {
+    span,
+    a {
+      display: none;
+    }
+  }
+}

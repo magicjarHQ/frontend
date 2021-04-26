@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 import { India } from "./scenes";
 
 export function Router(): JSX.Element {
@@ -9,8 +9,8 @@ export function Router(): JSX.Element {
         <Route exact path="/india">
           <India />
         </Route>
-        <Route exact path="/">
-          <div>Home</div>
+        <Route path="*">
+          <Redirect to="/india" />
         </Route>
       </Switch>
     </BrowserRouter>

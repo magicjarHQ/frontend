@@ -1,2 +1,19 @@
 // Colors
-$text_default: #ff0000;
+$text_default: #454545;
+$button_dafault: #1c1c1c;
+
+// Visual styles
+$radius: 6px;
+$default_spacing: 16px;
+
+@mixin base_shadow {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+// Breakpoints (≥)
+// Source: https://getbootstrap.com/docs/5.0/layout/breakpoints/#available-breakpoints
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;
