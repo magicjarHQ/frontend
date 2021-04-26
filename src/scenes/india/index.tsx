@@ -2,10 +2,15 @@ import React from "react";
 import { Container, Row, Col } from "react-grid-system";
 import { Button, Jar, LinkButton } from "components";
 import { IconTwitter } from "components/icons";
+import { useActions, useValues } from "kea";
+import { walletLogic } from "logics/walletLogic";
 
 export function India(): JSX.Element {
   const TWITTER_SHARE_COPY =
     "Let's help the fight the COVID crisis in India by temporarily staking part of our savings in @MagicJarHQ!";
+
+  const { authenticate } = useActions(walletLogic);
+  const { authenticated } = useValues(walletLogic);
 
   return (
     <>
@@ -16,7 +21,15 @@ export function India(): JSX.Element {
             <Jar
               actions={
                 <>
-                  <Button block>Log in to deposit</Button>
+                  {authenticated ? (
+                    <>
+                      <Button>Deposit</Button> <Button>Withdraw</Button>
+                    </>
+                  ) : (
+                    <Button block onClick={authenticate}>
+                      Log in to deposit
+                    </Button>
+                  )}
                 </>
               }
             />

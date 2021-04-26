@@ -1,0 +1,97 @@
+import { kea } from "kea";
+import Web3 from "web3";
+import Web3Modal from "web3modal";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import { dai } from "@studydefi/money-legos/erc20"; // ERC20 ABI
+import { rDAIABI } from "lib/rDAIABI";
+import { DEBUG, DEBUG_DAI_ADDRESS, NETWORK, RDAI_PROXY_CONTRACT } from "const";
+import { Contracts, Web3Provider } from "types";
+import { walletLogicType } from "types/logics/walletLogicType";
+
+// Web3Modal provider options
+const providerOptions = {
+  walletconnect: {
+    package: WalletConnectProvider,
+    options: {
+      // Inject Infura
+      infuraId: "a39625814a574bb68d2cb67b62e4a1e5", // process.env.NEXT_PUBLIC_INFURA_ID,
+    },
+  },
+};
+
+export const walletLogic = kea<walletLogicType<Web3Provider, Contracts>>({
+  actions: {
+    updateProvider: (payload: Partial<Web3Provider>) => ({ payload }),
+    updateContracts: (payload: Partial<Contracts>) => ({ payload }),
+    setAddress: (address: string) => ({ address }),
+    authenticate: true,
+    logout: true,
+  },
+  reducers: {
+    provider: [
+      { modal: null, web3: null } as Web3Provider,
+      {
+        updateProvider: (state, { payload }) => ({ ...state, ...payload }),
+      },
+    ],
+    contracts: [
+      { dai: null, rDai: null } as Contracts,
+      {
+        updateContracts: (state, { payload }) => ({ ...state, ...payload }),
+      },
+    ],
+    address: [
+      "",
+      {
+        setAddress: (_, { address }) => address,
+      },
+    ],
+  },
+  listeners: ({ values, actions }) => ({
+    authenticate: async () => {
+      // Toggle modal
+      const provider = await values.provider.modal?.connect();
+      const web3 = new Web3(provider);
+      actions.updateProvider({ web3 });
+      // Collect contracts
+      const daiContract = new web3.eth.Contract(
+        // @ts-ignore TODO: Fix typing here
+        dai.abi,
+        DEBUG ? DEBUG_DAI_ADDRESS : dai.address
+      );
+      // @ts-ignore TODO: Fix typing here
+      const rDAIContract = new web3.eth.Contract(rDAIABI, RDAI_PROXY_CONTRACT);
+      actions.updateContracts({ dai: daiContract, rDai: rDAIContract });
+      // Collect address
+      const accounts = await web3.eth.getAccounts();
+      actions.setAddress(accounts[0]);
+    },
+    logout: async () => {
+      if (
+        values.provider.web3 &&
+        values.provider.web3.currentProvider &&
+        typeof values.provider.web3.currentProvider !== "string" &&
+        "close" in values.provider.web3.currentProvider
+      ) {
+        // @ts-expect-error TODO: Fix typing
+        await values.provider.web3.currentProvider.close();
+      }
+
+      actions.setAddress("");
+      actions.updateProvider({ web3: null });
+    },
+  }),
+  selectors: {
+    authenticated: [(s) => [s.address], (address): boolean => !!address],
+  },
+  events: ({ actions }) => ({
+    afterMount: () => {
+      const web3Modal = new Web3Modal({
+        network: NETWORK,
+        cacheProvider: true,
+        providerOptions: providerOptions,
+      });
+      actions.updateProvider({ modal: web3Modal });
+    },
+  }),
+});

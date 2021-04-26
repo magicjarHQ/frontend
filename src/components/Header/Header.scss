@@ -29,14 +29,15 @@
     display: flex;
     align-items: center;
 
-    & > a {
+    & > a,
+    > span {
       margin-right: $default_spacing * 2;
     }
   }
 
   @media only screen and (max-width: $lg) {
-    span,
-    a {
+    a,
+    .tagline {
       display: none;
     }
   }
