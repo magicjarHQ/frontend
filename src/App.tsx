@@ -2,6 +2,7 @@ import React from "react";
 import { Router } from "./Router";
 import { resetContext, getContext } from "kea";
 import { Provider } from "react-redux";
+import { Slide, ToastContainer } from "react-toastify";
 // @ts-ignore
 import { loadersPlugin } from "kea-loaders";
 import "./global.scss";
@@ -25,6 +26,7 @@ function App(): JSX.Element {
         <Router />
       </div>
       <Footer />
+      <ToastContainer transition={Slide} />
     </Provider>
   );
 }

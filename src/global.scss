@@ -1,4 +1,5 @@
 @import "_vars";
+@import "react-toastify/dist/ReactToastify.css";
 
 body {
   margin: 0;
@@ -53,4 +54,58 @@ a:hover {
 
 .no-scroll {
   overflow: hidden;
+}
+
+// react-toastify override
+.Toastify__toast {
+  @include base_shadow;
+  border-radius: $radius;
+  background-color: white;
+  color: $text_default;
+  line-height: 1.2rem;
+
+  .Toastify__toast-body {
+    padding-top: 32px !important;
+  }
+
+  &.Toastify__toast--success {
+    padding-top: $default_spacing * 2 + 6px;
+    padding-bottom: $default_spacing;
+
+    &::before {
+      background-image: url("assets/images/checkmark.svg");
+      background-repeat: no-repeat;
+      color: $green;
+      content: "Success!";
+      top: $default_spacing / 2;
+      position: absolute;
+      font-weight: bold;
+      line-height: 1.8em;
+      padding-left: 1.8em;
+      margin-left: -2px; // To account for the icon's viewbox padding.
+    }
+
+    .Toastify__progress-bar {
+      background-color: $green;
+    }
+  }
+
+  &.Toastify__toast--error {
+    &::before {
+      background-image: url("assets/images/exclamation-circle-solid.svg");
+      background-repeat: no-repeat;
+      color: $red;
+      content: "Something went wrong";
+      top: $default_spacing / 2;
+      position: absolute;
+      font-weight: bold;
+      line-height: 1.8em;
+      padding-left: 1.8em;
+      margin-left: -2px; // To account for the icon's viewbox padding.
+    }
+
+    .Toastify__progress-bar {
+      background-color: $red;
+    }
+  }
 }

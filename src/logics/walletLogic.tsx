@@ -13,6 +13,7 @@ import {
 } from "const";
 import { BallancesAllowances, Contracts, Web3Provider } from "types";
 import { walletLogicType } from "types/logics/walletLogicType";
+import { toast } from "react-toastify";
 
 // Web3Modal provider options
 const providerOptions = {
@@ -103,7 +104,7 @@ export const walletLogic = kea<
           if (amount <= (values.balancesAllowances.dai?.allowance || 0)) {
             return parseFloat(amount);
           }
-          await values.contracts.dai?.methods
+          const result = await values.contracts.dai?.methods
             .approve(
               RDAI_PROXY_CONTRACT,
               values.provider.web3?.utils.toWei(amount.toString(), "ether")
@@ -111,6 +112,9 @@ export const walletLogic = kea<
             .send({
               from: values.address,
             });
+          if (result.error) {
+            throw result.error;
+          }
           return parseFloat(amount);
         },
       },
@@ -119,7 +123,7 @@ export const walletLogic = kea<
       false,
       {
         stake: async () => {
-          await values.contracts.rDai?.methods
+          const result = await values.contracts.rDai?.methods
             .mintWithSelectedHat(
               values.provider.web3?.utils.toWei(
                 values.approvedAmount.toString(),
@@ -130,6 +134,9 @@ export const walletLogic = kea<
             .send({
               from: values.address,
             });
+          if (result.error) {
+            throw result.error;
+          }
           return true;
         },
       },
@@ -178,8 +185,30 @@ export const walletLogic = kea<
     approveSuccess: async () => {
       actions.loadBalances();
     },
+    approveFailure: async ({ error }) => {
+      toast.error(
+        <div style={{ maxWidth: 280 }}>
+          There was a problem completing your transaction.{" "}
+          <b>Please try again.</b>
+          <div>
+            Error details: <i>{error}</i>
+          </div>
+        </div>
+      );
+    },
     stakeSuccess: async () => {
       actions.loadBalances();
+    },
+    stakeFailure: async ({ error }) => {
+      toast.error(
+        <div style={{ maxWidth: 280 }}>
+          There was a problem completing your transaction.{" "}
+          <b>Please try again.</b>
+          <div>
+            Error details: <i>{error}</i>
+          </div>
+        </div>
+      );
     },
   }),
   selectors: {
