@@ -13,6 +13,10 @@
   text-decoration: none;
   justify-content: center;
 
+  &:hover {
+    text-decoration: none;
+  }
+
   span {
     margin-right: 4px;
     margin-top: 2px;

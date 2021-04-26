@@ -32,6 +32,16 @@
         font-size: 2rem;
       }
     }
+
+    @media screen and (max-width: $md) {
+      width: 200px;
+      .total-stake {
+        bottom: 28%;
+        .amount {
+          font-size: 1.7rem;
+        }
+      }
+    }
   }
 
   .jar-inner {

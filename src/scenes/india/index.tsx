@@ -10,7 +10,7 @@ export function India(): JSX.Element {
   return (
     <>
       <h1 className="text-center">Support India by saving money</h1>
-      <Container>
+      <Container style={{ maxWidth: 1100 }}>
         <Row>
           <Col md={7} push={{ md: 5 }}>
             <Jar
