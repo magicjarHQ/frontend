@@ -16,8 +16,16 @@ export function Header(): JSX.Element {
         <span className="tagline">Support your causes by saving money</span>
       </div>
       <div className="actions">
-        <a href="#discord">Join Discord</a>
-        <a href="#create">Create a Jar</a>
+        <a href="https://discord.gg/edXzegJ9" rel="noreferrer" target="_blank">
+          Join Discord
+        </a>
+        <a
+          href="https://uti5pq5o5y0.typeform.com/to/txONPtJW"
+          rel="noreferrer"
+          target="_blank"
+        >
+          Create a Jar
+        </a>
         {authenticated ? (
           <>
             <span className="address">{midEllipsis(address, 12)}</span>

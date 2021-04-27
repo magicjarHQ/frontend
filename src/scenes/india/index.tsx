@@ -73,7 +73,8 @@ export function India(): JSX.Element {
                 in this case to the{" "}
                 <a
                   href="https://twitter.com/sandeepnailwal/status/1385968552679727113"
-                  target="_blank" rel="noreferrer"
+                  target="_blank"
+                  rel="noreferrer"
                 >
                   Crypto COVID Relief Fund
                 </a>
@@ -95,7 +96,11 @@ export function India(): JSX.Element {
               <b>Acknowledgements</b>
               <p>
                 MagicJar was inspired by{" "}
-                <a href="https://pooltogether.com/" target="_blank" rel="noreferrer">
+                <a
+                  href="https://pooltogether.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   PoolTogether
                 </a>
                 , and was built on{" "}
@@ -103,15 +108,27 @@ export function India(): JSX.Element {
                   rDAI
                 </a>{" "}
                 which uses{" "}
-                <a href="https://compound.finance/" target="_blank" rel="noreferrer">
+                <a
+                  href="https://compound.finance/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Compound
                 </a>{" "}
                 and has been audited by{" "}
-                <a href="https://quantstamp.com/" target="_blank" rel="noreferrer">
+                <a
+                  href="https://certificate.quantstamp.com/full/r-token-ethereum-contracts"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Quantstamp
                 </a>
                 . Some visual assets come from{" "}
-                <a href="https://www.flaticon.com/" target="_blank" rel="noreferrer">
+                <a
+                  href="https://www.flaticon.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Flaticon
                 </a>
                 .

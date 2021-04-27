@@ -1,6 +1,6 @@
 import {
   IconDiscord,
-  IconEmail,
+  // IconEmail,
   IconGitHub,
   IconTwitter,
 } from "components/icons";
@@ -59,8 +59,8 @@ export function Footer(): JSX.Element {
           icon={<IconGitHub />}
           href="https://github.com/magicjarHQ"
         />
-        <SocialLink icon={<IconEmail />} href="mailto:hello@magicjar.com" />
-        <SocialLink icon={<IconDiscord />} href="https://discord.com" />
+        {/* <SocialLink icon={<IconEmail />} href="mailto:hello@magicjar.com" /> */}
+        <SocialLink icon={<IconDiscord />} href="https://discord.gg/edXzegJ9" />
       </div>
     </div>
   );
