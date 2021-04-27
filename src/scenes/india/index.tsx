@@ -71,9 +71,14 @@ export function India(): JSX.Element {
                 a portion of their savings (only DAI for now) to help a given
                 cause. The pool generates interests every day, which are donated
                 in this case to the{" "}
-                <a href="#donate">Crypto COVID Relief Fund</a>. The Jar
-                continues generating interests indefinetly, and anyone can
-                deposit or withdraw funds at any time.
+                <a
+                  href="https://twitter.com/sandeepnailwal/status/1385968552679727113"
+                  target="_blank" rel="noreferrer"
+                >
+                  Crypto COVID Relief Fund
+                </a>
+                . The Jar continues generating interests indefinetly, and anyone
+                can deposit or withdraw funds at any time.
               </p>
               <div className="mt-2x">
                 <LinkButton
@@ -89,11 +94,27 @@ export function India(): JSX.Element {
             <div className="mt-2x text-muted">
               <b>Acknowledgements</b>
               <p>
-                MagicJar was inspired by <a href="#donate">PoolTogether</a>, and
-                was built on <a href="#donate">rDAI</a> which uses{" "}
-                <a href="#donate">Compound</a> and has been audited by{" "}
-                <a href="#donate">Quantstamp</a>. Some visual assets come from{" "}
-                <a href="#donate">Flaticon</a>.
+                MagicJar was inspired by{" "}
+                <a href="https://pooltogether.com/" target="_blank" rel="noreferrer">
+                  PoolTogether
+                </a>
+                , and was built on{" "}
+                <a href="https://rdai.money/" target="_blank" rel="noreferrer">
+                  rDAI
+                </a>{" "}
+                which uses{" "}
+                <a href="https://compound.finance/" target="_blank" rel="noreferrer">
+                  Compound
+                </a>{" "}
+                and has been audited by{" "}
+                <a href="https://quantstamp.com/" target="_blank" rel="noreferrer">
+                  Quantstamp
+                </a>
+                . Some visual assets come from{" "}
+                <a href="https://www.flaticon.com/" target="_blank" rel="noreferrer">
+                  Flaticon
+                </a>
+                .
               </p>
             </div>
           </Col>
