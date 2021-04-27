@@ -13,7 +13,7 @@ body {
 
 h1 {
   color: #000;
-  font-size: 2.5em;
+  font-size: 3em;
 }
 
 .main {
@@ -50,6 +50,10 @@ h1 {
 
 a:hover {
   text-decoration: underline;
+}
+
+a {
+  color: $text_default;
 }
 
 .no-scroll {

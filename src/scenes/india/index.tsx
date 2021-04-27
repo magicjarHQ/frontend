@@ -59,17 +59,21 @@ export function India(): JSX.Element {
             <div className="mt-2x">
               <b>India COVID-19 Crisis</b>
               <p>
-                adipiscing elit. Pellentesque sodales maximus tortor eu
-                vehicula. Curabitur porta ipsum sed sapien convallis pulvinar.
+                India is going through a COVID crisis like we have’t seen in the
+                entire pandemic. Officially, 350k people are contracting the
+                virus, and 3k are dying every day. The reality is even grimmer.
               </p>
             </div>
             <div className="mt-2x">
               <b>How MagicJar works</b>
               <p>
-                Pellentesque sodales maximus tortor eu vehicula. Curabitur porta
-                ipsum sed sapien convallis pulvinar. adipiscing elit.
-                Pellentesque sodales maximus tortor eu vehicula. Curabitur porta
-                ipsum sed sapien convallis pulvinar.
+                MagicJar is a pool of funds where anyone can temporarily deposit
+                a portion of their savings (only DAI for now) to help a given
+                cause. The pool generates interests every day, which are donated
+                in this case to the{" "}
+                <a href="#donate">Crypto COVID Relief Fund</a>. The Jar
+                continues generating interests indefinetly, and anyone can
+                deposit or withdraw funds at any time.
               </p>
               <div className="mt-2x">
                 <LinkButton
@@ -82,13 +86,14 @@ export function India(): JSX.Element {
                 </LinkButton>
               </div>
             </div>
-            <div className="mt-2x">
+            <div className="mt-2x text-muted">
               <b>Acknowledgements</b>
               <p>
-                Pellentesque sodales maximus tortor eu vehicula. Curabitur porta
-                ipsum sed sapien convallis pulvinar. adipiscing elit.
-                Pellentesque sodales maximus tortor eu vehicula. Curabitur porta
-                ipsum sed sapien convallis pulvinar.
+                MagicJar was inspired by <a href="#donate">PoolTogether</a>, and
+                was built on <a href="#donate">rDAI</a> which uses{" "}
+                <a href="#donate">Compound</a> and has been audited by{" "}
+                <a href="#donate">Quantstamp</a>. Some visual assets come from{" "}
+                <a href="#donate">Flaticon</a>.
               </p>
             </div>
           </Col>
