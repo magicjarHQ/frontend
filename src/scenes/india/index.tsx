@@ -59,17 +59,26 @@ export function India(): JSX.Element {
             <div className="mt-2x">
               <b>India COVID-19 Crisis</b>
               <p>
-                adipiscing elit. Pellentesque sodales maximus tortor eu
-                vehicula. Curabitur porta ipsum sed sapien convallis pulvinar.
+                India is going through a COVID crisis like we have’t seen in the
+                entire pandemic. Officially, 350k people are contracting the
+                virus, and 3k are dying every day. The reality is even grimmer.
               </p>
             </div>
             <div className="mt-2x">
               <b>How MagicJar works</b>
               <p>
-                Pellentesque sodales maximus tortor eu vehicula. Curabitur porta
-                ipsum sed sapien convallis pulvinar. adipiscing elit.
-                Pellentesque sodales maximus tortor eu vehicula. Curabitur porta
-                ipsum sed sapien convallis pulvinar.
+                MagicJar is a pool of money that generates interests every day,
+                and donates them to a common cause. In this case, the{" "}
+                <a
+                  href="https://twitter.com/sandeepnailwal/status/1385968552679727113"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  India Crypto COVID Relief Fund
+                </a>
+                . Anyone can deposit or withdraw funds at any time. Basically,
+                this is a new way to financially support the causes that you
+                care about by putting the money you have laying around to work.
               </p>
               <div className="mt-2x">
                 <LinkButton
@@ -82,13 +91,50 @@ export function India(): JSX.Element {
                 </LinkButton>
               </div>
             </div>
-            <div className="mt-2x">
+            <div className="mt-2x text-muted">
               <b>Acknowledgements</b>
               <p>
-                Pellentesque sodales maximus tortor eu vehicula. Curabitur porta
-                ipsum sed sapien convallis pulvinar. adipiscing elit.
-                Pellentesque sodales maximus tortor eu vehicula. Curabitur porta
-                ipsum sed sapien convallis pulvinar.
+                MagicJar was inspired by{" "}
+                <a
+                  href="https://pooltogether.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  PoolTogether
+                </a>
+                , and was built on{" "}
+                <a
+                  href="https://rdai.money/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  rDAI
+                </a>{" "}
+                which uses{" "}
+                <a
+                  href="https://compound.finance/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Compound
+                </a>{" "}
+                and has been audited by{" "}
+                <a
+                  href="https://certificate.quantstamp.com/full/r-token-ethereum-contracts"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Quantstamp
+                </a>
+                . Some visual assets come from{" "}
+                <a
+                  href="https://www.flaticon.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Flaticon
+                </a>
+                .
               </p>
             </div>
           </Col>
