@@ -67,19 +67,18 @@ export function India(): JSX.Element {
             <div className="mt-2x">
               <b>How MagicJar works</b>
               <p>
-                MagicJar is a pool of funds where anyone can temporarily deposit
-                a portion of their savings (only DAI for now) to help a given
-                cause. The pool generates interests every day, which are donated
-                in this case to the{" "}
+                MagicJar is a pool of money that generates interests every day,
+                and donates them to a common cause. In this case, the{" "}
                 <a
                   href="https://twitter.com/sandeepnailwal/status/1385968552679727113"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Crypto COVID Relief Fund
+                  India Crypto COVID Relief Fund
                 </a>
-                . The Jar continues generating interests indefinetly, and anyone
-                can deposit or withdraw funds at any time.
+                . Anyone can deposit or withdraw funds at any time. Basically,
+                this is a new way to financially support the causes that you
+                care about by putting the money you have laying around to work.
               </p>
               <div className="mt-2x">
                 <LinkButton
