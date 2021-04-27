@@ -59,7 +59,7 @@ export function Footer(): JSX.Element {
           icon={<IconGitHub />}
           href="https://github.com/magicjarHQ"
         />
-        {/* <SocialLink icon={<IconEmail />} href="mailto:hello@magicjar.com" /> */}
+        {/* <SocialLink icon={<IconEmail />} href="mailto:tbd@tbd.com" /> */}
         <SocialLink icon={<IconDiscord />} href="https://discord.gg/edXzegJ9" />
       </div>
     </div>

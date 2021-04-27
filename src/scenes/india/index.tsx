@@ -98,19 +98,23 @@ export function India(): JSX.Element {
                 <a
                   href="https://pooltogether.com/"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                 >
                   PoolTogether
                 </a>
                 , and was built on{" "}
-                <a href="https://rdai.money/" target="_blank" rel="noreferrer">
+                <a
+                  href="https://rdai.money/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   rDAI
                 </a>{" "}
                 which uses{" "}
                 <a
                   href="https://compound.finance/"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                 >
                   Compound
                 </a>{" "}
@@ -118,7 +122,7 @@ export function India(): JSX.Element {
                 <a
                   href="https://certificate.quantstamp.com/full/r-token-ethereum-contracts"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                 >
                   Quantstamp
                 </a>
@@ -126,7 +130,7 @@ export function India(): JSX.Element {
                 <a
                   href="https://www.flaticon.com/"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                 >
                   Flaticon
                 </a>

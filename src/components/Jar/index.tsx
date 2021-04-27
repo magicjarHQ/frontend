@@ -22,7 +22,8 @@ export function Jar({ actions }: JarInterface): JSX.Element {
           or{" "}
           <a
             href="https://twitter.com/sandeepnailwal/status/1385968552679727113"
-            target="_blank" rel="noreferrer"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             donate
           </a>{" "}
