@@ -84,6 +84,21 @@ export const walletLogic = kea<
             .allowance(values.address, RDAI_PROXY_CONTRACT)
             .call();
 
+          const hatStatistics = await values.contracts.rDai?.methods
+            .getHatStats(RDAI_INDIA_RELIEF_HAT)
+            .call();
+          const totalLoans = parseFloat(
+            // @ts-ignore
+            values.provider.web3?.utils.fromWei(hatStatistics.totalLoans)
+          );
+          const totalSavings = parseFloat(
+            // @ts-ignore
+            values.provider.web3?.utils.fromWei(hatStatistics.totalSavings)
+          );
+          const interestAccumulated = totalSavings - totalLoans;
+          console.log("Total Staked", totalSavings);
+          console.log("Interest Accumulated", interestAccumulated);
+
           return {
             dai: {
               balance: values.provider.web3?.utils.fromWei(DAIBalance),
