@@ -12,9 +12,11 @@
   display: inline-flex;
   text-decoration: none;
   justify-content: center;
+  transition: 50ms ease-in-out;
 
   &:hover {
     text-decoration: none;
+    opacity: 0.8;
   }
 
   &:disabled {
@@ -24,11 +26,14 @@
   }
 
   span {
-    margin-right: 4px;
     margin-top: 2px;
   }
 
   &.block {
     width: 100%;
   }
+}
+
+.btn-icon {
+  margin-right: 5px;
 }

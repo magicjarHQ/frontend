@@ -67,8 +67,8 @@ export function India(): JSX.Element {
             <div className="mt-2x">
               <b>How MagicJar works</b>
               <p>
-                MagicJar is a pool of money that generates interests every day,
-                and donates them to a common cause. In this case, the{" "}
+                MagicJar is a pool of money that generates interest every day,
+                and donate it to a common cause. In this case, the{" "}
                 <a
                   href="https://twitter.com/sandeepnailwal/status/1385968552679727113"
                   target="_blank"
@@ -78,7 +78,7 @@ export function India(): JSX.Element {
                 </a>
                 . Anyone can deposit or withdraw funds at any time. Basically,
                 this is a new way to financially support the causes that you
-                care about by putting the money you have laying around to work.
+                care about, by putting the money you have laying around to work.
               </p>
               <div className="mt-2x">
                 <LinkButton
@@ -102,7 +102,7 @@ export function India(): JSX.Element {
                 >
                   PoolTogether
                 </a>
-                , and was built on{" "}
+                , built on{" "}
                 <a
                   href="https://rdai.money/"
                   target="_blank"

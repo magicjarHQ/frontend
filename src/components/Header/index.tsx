@@ -36,7 +36,7 @@ export function Header(): JSX.Element {
             <Button onClick={logout}>Logout</Button>
           </>
         ) : (
-          <Button onClick={authenticate}>Wallet Login</Button>
+          <Button onClick={authenticate}>Connect Wallet</Button>
         )}
       </div>
     </div>

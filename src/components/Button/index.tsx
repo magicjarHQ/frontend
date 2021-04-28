@@ -25,7 +25,7 @@ export function Button({
       }`}
       {...props}
     >
-      <span className="btn-icon">{icon}</span>
+      {icon ? <span className="btn-icon">{icon}</span> : null}
       {children}
     </button>
   );
