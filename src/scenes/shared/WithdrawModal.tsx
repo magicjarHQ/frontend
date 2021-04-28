@@ -1,4 +1,5 @@
 import { Button, Input, Modal } from "components";
+import { IconDAI } from "components/icons";
 import { Loader } from "components/Loader";
 import { ModalInterface } from "components/Modal";
 import { useActions, useValues } from "kea";
@@ -6,7 +7,7 @@ import { walletLogic } from "logics/walletLogic";
 import React, { useMemo, useState } from "react";
 import "./ActionModals.scss";
 
-export function DepositModal({
+export function WithdrawModal({
   onClose,
   ...props
 }: Omit<ModalInterface, "children">): JSX.Element {
@@ -25,7 +26,7 @@ export function DepositModal({
     if (
       !isNaN(parsedAmount) &&
       parsedAmount > 0 &&
-      parsedAmount <= (balancesAllowances.dai?.balance || 0)
+      parsedAmount <= (balancesAllowances.rDai?.balance || 0)
     ) {
       return "valid";
     }
@@ -40,15 +41,20 @@ export function DepositModal({
   return (
     <Modal {...props} onClose={handleClose} closable={!loading}>
       <div className="deposit-modal">
-        <h2>Deposit funds to help</h2>
+        <h2>Withdraw Funds</h2>
         <div className="wallet-balance">
-          {balancesAllowances.dai?.balance ? (
+          {balancesAllowances.rDai?.balance ? (
             <>
-              You have <b>${balancesAllowances.dai?.balance}</b> DAI available
-              in your wallet
+              You have staked
+              <b style={{ marginLeft: 4 }}>
+                ${balancesAllowances.rDai?.balance}
+              </b>
+              <IconDAI
+                style={{ color: "var(--text-default)", marginLeft: 4 }}
+              />
             </>
           ) : (
-            "Fetching your wallet balance..."
+            "Fetching your stake balance..."
           )}
         </div>
         {loading ? (
@@ -57,10 +63,10 @@ export function DepositModal({
           <>
             {approvedAmount >= parseFloat(amount) ? (
               <div className="mt">
-                Complete your deposit of ${amount}.
+                Complete your withdraw of ${amount}.
                 <div className="text-right mt">
                   <Button disabled={loading} onClick={stake}>
-                    Stake ${amount}
+                    Withdraw ${amount}
                   </Button>
                 </div>
               </div>
@@ -76,8 +82,8 @@ export function DepositModal({
                   }}
                   state={formState}
                   errorMessage={
-                    parseFloat(amount) > (balancesAllowances.dai?.balance || 0)
-                      ? "You don't have enough DAI on your wallet to deposit"
+                    parseFloat(amount) > (balancesAllowances.rDai?.balance || 0)
+                      ? "This amount is larger than your current stake"
                       : undefined
                   }
                   disabled={loading}
@@ -94,10 +100,6 @@ export function DepositModal({
             )}
           </>
         )}
-
-        <div className="text-muted mt-2x">
-          We currently only support DAI, but hope to support more tokens soon
-        </div>
       </div>
     </Modal>
   );

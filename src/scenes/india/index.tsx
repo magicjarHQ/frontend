@@ -6,6 +6,7 @@ import { useActions, useValues } from "kea";
 import { walletLogic } from "logics/walletLogic";
 import { indiaLogic } from "logics/indiaLogic";
 import { DepositModal } from "scenes/shared/DepositModal";
+import { WithdrawModal } from "scenes/shared/WithdrawModal";
 
 export function India(): JSX.Element {
   const TWITTER_SHARE_COPY =
@@ -41,6 +42,7 @@ export function India(): JSX.Element {
                       <Button
                         style={{ width: "calc(50% - 4px)" }}
                         onClick={() => setModalState("withdraw")}
+                        disabled={!balancesAllowances.rDai?.balance}
                       >
                         Withdraw
                       </Button>
@@ -142,6 +144,9 @@ export function India(): JSX.Element {
       </Container>
       {modalState === "deposit" && (
         <DepositModal visible onClose={() => setModalState(null)} />
+      )}
+      {modalState === "withdraw" && (
+        <WithdrawModal visible onClose={() => setModalState(null)} />
       )}
     </>
   );
