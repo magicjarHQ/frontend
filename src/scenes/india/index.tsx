@@ -87,9 +87,10 @@ export function India(): JSX.Element {
                 >
                   India Crypto COVID Relief Fund
                 </a>
-                . Anyone can deposit or withdraw funds at any time. Basically,
-                this is a new way to financially support the causes that you
-                care about, by putting the money you have laying around to work.
+                . Anyone is free deposit or withdraw funds at any time.
+                Basically, this is a new way to financially support the causes
+                that you care about, by putting the money you have laying around
+                to work.
               </p>
               <div className="mt-2x">
                 <LinkButton
