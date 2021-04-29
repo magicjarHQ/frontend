@@ -10,6 +10,7 @@ import {
   NETWORK,
   RDAI_INDIA_RELIEF_HAT,
   RDAI_PROXY_CONTRACT,
+  STATS_ENDPOINT,
 } from "const";
 import {
   BallancesAllowances,
@@ -196,21 +197,8 @@ export const walletLogic = kea<
     stats: [
       { savings: 0, interest: 0 } as StatsInterface,
       {
-        fetchStats: async () => {
-          const hatStatistics = await values.contracts.rDai?.methods
-            .getHatStats(RDAI_INDIA_RELIEF_HAT)
-            .call();
-          const loans = parseFloat(
-            // @ts-ignore
-            values.provider.web3?.utils.fromWei(hatStatistics.totalLoans)
-          );
-          const savings = parseFloat(
-            // @ts-ignore
-            values.provider.web3?.utils.fromWei(hatStatistics.totalSavings)
-          );
-          const interest = savings - loans;
-          return { savings, interest };
-        },
+        fetchStats: async () =>
+          ((await fetch(STATS_ENDPOINT)).json() as unknown) as StatsInterface,
       },
     ],
   }),
@@ -233,7 +221,6 @@ export const walletLogic = kea<
       // Collect address
       const accounts = await web3.eth.getAccounts();
       actions.setAddress(accounts[0]);
-      actions.fetchStats();
     },
     logout: async () => {
       // TODO: Loading state
@@ -269,10 +256,12 @@ export const walletLogic = kea<
     },
     stakeSuccess: async () => {
       actions.loadBalances();
+      setTimeout(() => actions.loadBalances(), 5000); // Sometimes the balance will not update immediately
       actions.fetchStats();
     },
     unstakeSuccess: async () => {
       actions.loadBalances();
+      setTimeout(() => actions.loadBalances(), 5000); // Sometimes the balance will not update immediately
       actions.fetchStats();
     },
     stakeFailure: async ({ error }) => {
@@ -301,6 +290,7 @@ export const walletLogic = kea<
   },
   events: ({ actions }) => ({
     afterMount: () => {
+      actions.fetchStats();
       const web3Modal = new Web3Modal({
         network: NETWORK,
         cacheProvider: true,
