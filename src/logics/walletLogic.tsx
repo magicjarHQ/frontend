@@ -11,7 +11,12 @@ import {
   RDAI_INDIA_RELIEF_HAT,
   RDAI_PROXY_CONTRACT,
 } from "const";
-import { BallancesAllowances, Contracts, Web3Provider } from "types";
+import {
+  BallancesAllowances,
+  Contracts,
+  StatsInterface,
+  Web3Provider,
+} from "types";
 import { walletLogicType } from "types/logics/walletLogicType";
 import { toast } from "react-toastify";
 
@@ -40,7 +45,7 @@ const errorToast = (error?: string): void => {
 };
 
 export const walletLogic = kea<
-  walletLogicType<Web3Provider, Contracts, BallancesAllowances>
+  walletLogicType<Web3Provider, Contracts, BallancesAllowances, StatsInterface>
 >({
   actions: {
     updateProvider: (payload: Partial<Web3Provider>) => ({ payload }),
@@ -188,6 +193,26 @@ export const walletLogic = kea<
         },
       },
     ],
+    stats: [
+      { savings: 0, interest: 0 } as StatsInterface,
+      {
+        fetchStats: async () => {
+          const hatStatistics = await values.contracts.rDai?.methods
+            .getHatStats(RDAI_INDIA_RELIEF_HAT)
+            .call();
+          const loans = parseFloat(
+            // @ts-ignore
+            values.provider.web3?.utils.fromWei(hatStatistics.totalLoans)
+          );
+          const savings = parseFloat(
+            // @ts-ignore
+            values.provider.web3?.utils.fromWei(hatStatistics.totalSavings)
+          );
+          const interest = savings - loans;
+          return { savings, interest };
+        },
+      },
+    ],
   }),
   listeners: ({ values, actions }) => ({
     authenticate: async () => {
@@ -208,6 +233,7 @@ export const walletLogic = kea<
       // Collect address
       const accounts = await web3.eth.getAccounts();
       actions.setAddress(accounts[0]);
+      actions.fetchStats();
     },
     logout: async () => {
       // TODO: Loading state
@@ -243,9 +269,11 @@ export const walletLogic = kea<
     },
     stakeSuccess: async () => {
       actions.loadBalances();
+      actions.fetchStats();
     },
     unstakeSuccess: async () => {
       actions.loadBalances();
+      actions.fetchStats();
     },
     stakeFailure: async ({ error }) => {
       toast.error(

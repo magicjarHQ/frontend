@@ -7,13 +7,16 @@ import { walletLogic } from "logics/walletLogic";
 import { indiaLogic } from "logics/indiaLogic";
 import { DepositModal } from "scenes/shared/DepositModal";
 import { WithdrawModal } from "scenes/shared/WithdrawModal";
+import { Loader } from "components/Loader";
 
 export function India(): JSX.Element {
   const TWITTER_SHARE_COPY =
     "Let's help the fight the COVID crisis in India by temporarily staking part of our savings in @MagicJarHQ!";
 
   const { authenticate } = useActions(walletLogic);
-  const { authenticated, balancesAllowances } = useValues(walletLogic);
+  const { authenticated, balancesAllowances, stats, statsLoading } = useValues(
+    walletLogic
+  );
   const { modalState } = useValues(indiaLogic);
   const { setModalState } = useActions(indiaLogic);
 
@@ -23,38 +26,44 @@ export function India(): JSX.Element {
       <Container style={{ maxWidth: 1100 }}>
         <Row>
           <Col md={7} push={{ md: 5 }}>
-            <Jar
-              actions={
-                <>
-                  {authenticated ? (
-                    <>
-                      <div className="my-stake">
-                        {balancesAllowances.rDai?.balance
-                          ? `You have staked $${balancesAllowances.rDai?.balance}`
-                          : "Calculating your stake..."}
-                      </div>
-                      <Button
-                        style={{ width: "calc(50% - 4px)", marginRight: 8 }}
-                        onClick={() => setModalState("deposit")}
-                      >
-                        Deposit
+            {statsLoading ? (
+              <Loader />
+            ) : (
+              <Jar
+                totalStaked={stats.savings}
+                totalInterest={stats.interest}
+                actions={
+                  <>
+                    {authenticated ? (
+                      <>
+                        <div className="my-stake">
+                          {balancesAllowances.rDai?.balance
+                            ? `You have staked $${balancesAllowances.rDai?.balance}`
+                            : "Calculating your stake..."}
+                        </div>
+                        <Button
+                          style={{ width: "calc(50% - 4px)", marginRight: 8 }}
+                          onClick={() => setModalState("deposit")}
+                        >
+                          Deposit
+                        </Button>
+                        <Button
+                          style={{ width: "calc(50% - 4px)" }}
+                          onClick={() => setModalState("withdraw")}
+                          disabled={!balancesAllowances.rDai?.balance}
+                        >
+                          Withdraw
+                        </Button>
+                      </>
+                    ) : (
+                      <Button block onClick={authenticate}>
+                        Log in to deposit
                       </Button>
-                      <Button
-                        style={{ width: "calc(50% - 4px)" }}
-                        onClick={() => setModalState("withdraw")}
-                        disabled={!balancesAllowances.rDai?.balance}
-                      >
-                        Withdraw
-                      </Button>
-                    </>
-                  ) : (
-                    <Button block onClick={authenticate}>
-                      Log in to deposit
-                    </Button>
-                  )}
-                </>
-              }
-            />
+                    )}
+                  </>
+                }
+              />
+            )}
           </Col>
           <Col md={5} pull={{ md: 7 }}>
             <h2>MagicJar for India 🇮🇳</h2>
