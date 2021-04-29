@@ -58,10 +58,10 @@ export function WithdrawModal({
           <>
             {withdrawApprovedAmount >= parseFloat(amount) ? (
               <div className="mt">
-                Complete your withdraw of ${amount}.
+                You are withdrawing ${amount}.
                 <div className="text-right mt">
                   <Button disabled={loading} onClick={unstake}>
-                    Withdraw ${amount}
+                    Confirm withdraw
                   </Button>
                 </div>
               </div>

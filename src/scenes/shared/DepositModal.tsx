@@ -44,8 +44,11 @@ export function DepositModal({
         <div className="wallet-balance">
           {balancesAllowances.dai?.balance ? (
             <>
-              You have <b>${balancesAllowances.dai?.balance}</b> DAI available
-              in your wallet
+              You have
+              <b style={{ marginLeft: 4, marginRight: 4 }}>
+                ${balancesAllowances.dai?.balance}
+              </b>{" "}
+              DAI available in your wallet
             </>
           ) : (
             "Fetching your wallet balance..."
@@ -57,10 +60,10 @@ export function DepositModal({
           <>
             {approvedAmount >= parseFloat(amount) ? (
               <div className="mt">
-                Complete your deposit of ${amount}.
+                You are depositing ${amount}.
                 <div className="text-right mt">
                   <Button disabled={loading} onClick={stake}>
-                    Stake ${amount}
+                    Confirm deposit
                   </Button>
                 </div>
               </div>
