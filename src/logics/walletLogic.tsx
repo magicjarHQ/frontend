@@ -264,6 +264,10 @@ export const walletLogic = kea<
       setTimeout(() => actions.loadBalances(), 5000); // Sometimes the balance will not update immediately
       actions.fetchStats();
     },
+    loadBalancesSuccess: async () => {
+      // TODO: Temporary logging
+      console.log("Current balances", values.balancesAllowances);
+    },
     stakeFailure: async ({ error }) => {
       toast.error(
         <div style={{ maxWidth: 280 }}>
