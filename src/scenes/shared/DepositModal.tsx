@@ -99,7 +99,9 @@ export function DepositModal({
         )}
 
         <div className="text-muted mt-2x">
-          We currently only support DAI, but hope to support more tokens soon
+          We currently only support DAI. MagicJar works best with MetaMask, if
+          you run into issues with WalletConnect, wait 3 minutes and refresh the
+          page.
         </div>
       </div>
     </Modal>
