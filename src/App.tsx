@@ -7,6 +7,11 @@ import { Slide, ToastContainer } from "react-toastify";
 import { loadersPlugin } from "kea-loaders";
 import "./global.scss";
 import { Header, Footer } from "./components";
+import posthog from "posthog-js";
+
+posthog.init("X048w9D0JiLBoRsUTqFetaSDGKyORi85tkcCKDuSrkA", {
+  api_host: "https://app.posthog.com",
+});
 
 resetContext({
   createStore: {
