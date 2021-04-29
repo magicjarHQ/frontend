@@ -121,7 +121,10 @@ export const walletLogic = kea<
       0,
       {
         approve: async ({ amount }: { amount: string }) => {
-          if (amount <= (values.balancesAllowances.dai?.allowance || 0)) {
+          if (
+            parseFloat(amount) <=
+            (values.balancesAllowances.dai?.allowance || 0)
+          ) {
             console.log("skipped approval process, allowance already set");
             return parseFloat(amount);
           }
@@ -170,7 +173,10 @@ export const walletLogic = kea<
       0,
       {
         approveWithdraw: async ({ amount }: { amount: string }) => {
-          if (amount <= (values.balancesAllowances.rDai?.allowance || 0)) {
+          if (
+            parseFloat(amount) <=
+            (values.balancesAllowances.rDai?.allowance || 0)
+          ) {
             console.log(
               "skipped widthraw approval process, allowance already set"
             );
