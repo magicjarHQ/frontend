@@ -20,3 +20,8 @@ export interface BallancesAllowances {
   dai: BalanceAllowance | null;
   rDai: BalanceAllowance | null;
 }
+
+export interface StatsInterface {
+  savings: number;
+  interest: number;
+}

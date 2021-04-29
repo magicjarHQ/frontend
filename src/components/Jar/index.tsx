@@ -3,19 +3,26 @@ import "./Jar.scss";
 
 interface JarInterface {
   actions?: JSX.Element;
+  totalStaked: number;
+  totalInterest: number;
 }
 
-export function Jar({ actions }: JarInterface): JSX.Element {
+export function Jar({
+  actions,
+  totalStaked,
+  totalInterest,
+}: JarInterface): JSX.Element {
   return (
     <div className="jar-container">
       <div className="the-jar">
         <div className="total-stake">
-          TOTAL STAKED <div className="amount">$145,430</div>
+          TOTAL STAKED{" "}
+          <div className="amount">${totalStaked.toLocaleString()}</div>
         </div>
       </div>
       <div className="jar-inner">
         <div className="revenue">
-          🎉 Generating <b>$14,650</b> per week!
+          🎉 Total interest generated <b>${totalInterest.toLocaleString()}</b>!
         </div>
         <div className="actions">{actions}</div>
         <div className="donation">

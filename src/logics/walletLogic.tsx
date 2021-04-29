@@ -10,8 +10,14 @@ import {
   NETWORK,
   RDAI_INDIA_RELIEF_HAT,
   RDAI_PROXY_CONTRACT,
+  STATS_ENDPOINT,
 } from "const";
-import { BallancesAllowances, Contracts, Web3Provider } from "types";
+import {
+  BallancesAllowances,
+  Contracts,
+  StatsInterface,
+  Web3Provider,
+} from "types";
 import { walletLogicType } from "types/logics/walletLogicType";
 import { toast } from "react-toastify";
 
@@ -26,8 +32,21 @@ const providerOptions = {
   },
 };
 
+const errorToast = (error?: string): void => {
+  toast.error(
+    <div style={{ maxWidth: 280 }}>
+      There was a problem completing your transaction. <b>Please try again.</b>
+      {error && (
+        <div>
+          Error details: <i>{error}</i>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const walletLogic = kea<
-  walletLogicType<Web3Provider, Contracts, BallancesAllowances>
+  walletLogicType<Web3Provider, Contracts, BallancesAllowances, StatsInterface>
 >({
   actions: {
     updateProvider: (payload: Partial<Web3Provider>) => ({ payload }),
@@ -98,6 +117,7 @@ export const walletLogic = kea<
       },
     ],
     approvedAmount: [
+      // Used for deposits
       0,
       {
         approve: async ({ amount }: { amount: string }) => {
@@ -117,11 +137,6 @@ export const walletLogic = kea<
           }
           return parseFloat(amount);
         },
-      },
-    ],
-    _stakedAmount: [
-      false,
-      {
         stake: async () => {
           const result = await values.contracts.rDai?.methods
             .mintWithSelectedHat(
@@ -137,8 +152,53 @@ export const walletLogic = kea<
           if (result.error) {
             throw result.error;
           }
-          return true;
+          return 0;
         },
+      },
+    ],
+    withdrawApprovedAmount: [
+      0,
+      {
+        approveWithdraw: async ({ amount }: { amount: string }) => {
+          if (amount <= (values.balancesAllowances.rDai?.allowance || 0)) {
+            return parseFloat(amount);
+          }
+          const result = await values.contracts.rDai?.methods
+            .approve(
+              RDAI_PROXY_CONTRACT,
+              values.provider.web3?.utils.toWei(amount, "ether")
+            )
+            .send({
+              from: values.address,
+            });
+          if (result.error) {
+            throw result.error;
+          }
+          return parseFloat(amount);
+        },
+        unstake: async () => {
+          const result = await values.contracts.rDai?.methods
+            .redeem(
+              values.provider.web3?.utils.toWei(
+                values.withdrawApprovedAmount.toString(),
+                "ether"
+              )
+            )
+            .send({
+              from: values.address,
+            });
+          if (result.error) {
+            throw result.error;
+          }
+          return 0;
+        },
+      },
+    ],
+    stats: [
+      { savings: 0, interest: 0 } as StatsInterface,
+      {
+        fetchStats: async () =>
+          ((await fetch(STATS_ENDPOINT)).json() as unknown) as StatsInterface,
       },
     ],
   }),
@@ -185,19 +245,24 @@ export const walletLogic = kea<
     approveSuccess: async () => {
       actions.loadBalances();
     },
+    approveWithdrawSuccess: async () => {
+      actions.loadBalances();
+    },
     approveFailure: async ({ error }) => {
-      toast.error(
-        <div style={{ maxWidth: 280 }}>
-          There was a problem completing your transaction.{" "}
-          <b>Please try again.</b>
-          <div>
-            Error details: <i>{error}</i>
-          </div>
-        </div>
-      );
+      errorToast(error);
+    },
+    approveWithdrawFailure: async ({ error }) => {
+      errorToast(error);
     },
     stakeSuccess: async () => {
       actions.loadBalances();
+      setTimeout(() => actions.loadBalances(), 5000); // Sometimes the balance will not update immediately
+      actions.fetchStats();
+    },
+    unstakeSuccess: async () => {
+      actions.loadBalances();
+      setTimeout(() => actions.loadBalances(), 5000); // Sometimes the balance will not update immediately
+      actions.fetchStats();
     },
     stakeFailure: async ({ error }) => {
       toast.error(
@@ -217,14 +282,15 @@ export const walletLogic = kea<
       (s) => [
         s.balancesAllowancesLoading,
         s.approvedAmountLoading,
-        s._stakedAmountLoading,
+        s.withdrawApprovedAmountLoading,
       ],
-      (balLoading, approvalLoading, stakeLoading) =>
-        balLoading || approvalLoading || stakeLoading,
+      (balanceLoading, depositLoading, withdrawLoading) =>
+        balanceLoading || depositLoading || withdrawLoading,
     ],
   },
   events: ({ actions }) => ({
     afterMount: () => {
+      actions.fetchStats();
       const web3Modal = new Web3Modal({
         network: NETWORK,
         cacheProvider: true,

@@ -20,6 +20,9 @@ export function Modal({
     } else {
       window.document.body.classList.remove("no-scroll");
     }
+    return () => {
+      window.document.body.classList.remove("no-scroll");
+    };
   }, [visible]);
 
   return (

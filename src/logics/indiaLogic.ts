@@ -20,5 +20,8 @@ export const indiaLogic = kea<indiaLogicType<ModalType>>({
     [walletLogic.actionTypes.stakeSuccess]: async () => {
       actions.setModalState(null);
     },
+    [walletLogic.actionTypes.unstakeSuccess]: async () => {
+      actions.setModalState(null);
+    },
   }),
 });
