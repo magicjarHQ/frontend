@@ -121,7 +121,10 @@ export const walletLogic = kea<
       0,
       {
         approve: async ({ amount }: { amount: string }) => {
-          if (amount <= (values.balancesAllowances.dai?.allowance || 0)) {
+          if (
+            parseFloat(amount) <=
+            (values.balancesAllowances.dai?.allowance || 0)
+          ) {
             return parseFloat(amount);
           }
           const result = await values.contracts.dai?.methods
@@ -160,7 +163,10 @@ export const walletLogic = kea<
       0,
       {
         approveWithdraw: async ({ amount }: { amount: string }) => {
-          if (amount <= (values.balancesAllowances.rDai?.allowance || 0)) {
+          if (
+            parseFloat(amount) <=
+            (values.balancesAllowances.rDai?.allowance || 0)
+          ) {
             return parseFloat(amount);
           }
           const result = await values.contracts.rDai?.methods
