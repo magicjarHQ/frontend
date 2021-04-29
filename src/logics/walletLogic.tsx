@@ -1,7 +1,7 @@
 import { kea } from "kea";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
-import WalletConnectProvider from "@walletconnect/web3-provider";
+// import WalletConnectProvider from "@walletconnect/web3-provider";
 import { dai } from "@studydefi/money-legos/erc20"; // ERC20 ABI
 import { rDAIABI } from "lib/rDAIABI";
 import {
@@ -23,13 +23,13 @@ import { toast } from "react-toastify";
 
 // Web3Modal provider options
 const providerOptions = {
-  walletconnect: {
+  /*walletconnect: {
     package: WalletConnectProvider,
     options: {
       // Inject Infura
       infuraId: "a39625814a574bb68d2cb67b62e4a1e5", // process.env.NEXT_PUBLIC_INFURA_ID,
     },
-  },
+  },*/
 };
 
 const errorToast = (error?: string): void => {

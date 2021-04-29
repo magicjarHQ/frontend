@@ -57,7 +57,7 @@ export function India(): JSX.Element {
                       </>
                     ) : (
                       <Button block onClick={authenticate}>
-                        Log in to deposit
+                        Log in with MetaMask
                       </Button>
                     )}
                   </>

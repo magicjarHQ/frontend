@@ -95,10 +95,6 @@ export function WithdrawModal({
             )}
           </>
         )}
-        <div className="text-muted mt-2x">
-          MagicJar works best with MetaMask, if you run into issues with
-          WalletConnect, wait 3 minutes and refresh the page.
-        </div>
       </div>
     </Modal>
   );
