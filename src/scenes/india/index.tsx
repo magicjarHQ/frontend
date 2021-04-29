@@ -79,7 +79,7 @@ export function India(): JSX.Element {
               <b>How MagicJar works</b>
               <p>
                 MagicJar is a pool of money that generates interest every day,
-                and donate it to a common cause. In this case, the{" "}
+                and donates it to a common cause. In this case, the{" "}
                 <a
                   href="https://twitter.com/sandeepnailwal/status/1385968552679727113"
                   target="_blank"
