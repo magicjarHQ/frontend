@@ -82,7 +82,7 @@ export const walletLogic = kea<
       },
     ],
   },
-  loaders: ({ values }) => ({
+  loaders: ({ values, actions }) => ({
     balancesAllowances: [
       { dai: null, rDai: null } as BallancesAllowances,
       {
@@ -122,19 +122,29 @@ export const walletLogic = kea<
       {
         approve: async ({ amount }: { amount: string }) => {
           if (amount <= (values.balancesAllowances.dai?.allowance || 0)) {
+            console.log("skipped approval process, allowance already set");
             return parseFloat(amount);
           }
-          const result = await values.contracts.dai?.methods
-            .approve(
-              RDAI_PROXY_CONTRACT,
-              values.provider.web3?.utils.toWei(amount.toString(), "ether")
-            )
-            .send({
-              from: values.address,
-            });
+          let result;
+          try {
+            result = await values.contracts.dai?.methods
+              .approve(
+                RDAI_PROXY_CONTRACT,
+                values.provider.web3?.utils.toWei(amount.toString(), "ether")
+              )
+              .send({
+                from: values.address,
+              });
+          } catch (e) {
+            console.warn(e);
+            actions.approveFailure(e);
+            return 0;
+          }
+
           if (result.error) {
             throw result.error;
           }
+          console.log("ran full approval process");
           return parseFloat(amount);
         },
         stake: async () => {
@@ -161,16 +171,27 @@ export const walletLogic = kea<
       {
         approveWithdraw: async ({ amount }: { amount: string }) => {
           if (amount <= (values.balancesAllowances.rDai?.allowance || 0)) {
+            console.log(
+              "skipped widthraw approval process, allowance already set"
+            );
             return parseFloat(amount);
           }
-          const result = await values.contracts.rDai?.methods
-            .approve(
-              RDAI_PROXY_CONTRACT,
-              values.provider.web3?.utils.toWei(amount, "ether")
-            )
-            .send({
-              from: values.address,
-            });
+          let result;
+          try {
+            result = await values.contracts.rDai?.methods
+              .approve(
+                RDAI_PROXY_CONTRACT,
+                values.provider.web3?.utils.toWei(amount, "ether")
+              )
+              .send({
+                from: values.address,
+              });
+          } catch (e) {
+            console.warn(e);
+            actions.approveFailure(e);
+            return 0;
+          }
+
           if (result.error) {
             throw result.error;
           }
