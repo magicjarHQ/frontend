@@ -130,6 +130,7 @@ export const walletLogic = kea<
           }
           let result;
           try {
+            console.log("initiating approval for", amount);
             result = await values.contracts.dai?.methods
               .approve(
                 RDAI_PROXY_CONTRACT,
@@ -138,6 +139,7 @@ export const walletLogic = kea<
               .send({
                 from: values.address,
               });
+            console.log("approval request terminated");
           } catch (e) {
             console.warn(e);
             actions.approveFailure(e);
