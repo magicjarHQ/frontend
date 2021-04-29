@@ -11,10 +11,10 @@ export function WithdrawModal({
   onClose,
   ...props
 }: Omit<ModalInterface, "children">): JSX.Element {
-  const { balancesAllowances, loading, approvedAmount } = useValues(
+  const { balancesAllowances, loading, withdrawApprovedAmount } = useValues(
     walletLogic
   );
-  const { approve, setApprovedAmount, stake } = useActions(walletLogic);
+  const { approveWithdraw, unstake } = useActions(walletLogic);
   const [amount, setAmount] = useState("");
   const [touched, setTouched] = useState(false);
 
@@ -33,13 +33,8 @@ export function WithdrawModal({
     return "invalid";
   }, [touched, amount, balancesAllowances]);
 
-  const handleClose = () => {
-    setApprovedAmount(0);
-    onClose();
-  };
-
   return (
-    <Modal {...props} onClose={handleClose} closable={!loading}>
+    <Modal {...props} onClose={onClose} closable={!loading}>
       <div className="deposit-modal">
         <h2>Withdraw Funds</h2>
         <div className="wallet-balance">
@@ -61,11 +56,11 @@ export function WithdrawModal({
           <Loader />
         ) : (
           <>
-            {approvedAmount >= parseFloat(amount) ? (
+            {withdrawApprovedAmount >= parseFloat(amount) ? (
               <div className="mt">
                 Complete your withdraw of ${amount}.
                 <div className="text-right mt">
-                  <Button disabled={loading} onClick={stake}>
+                  <Button disabled={loading} onClick={unstake}>
                     Withdraw ${amount}
                   </Button>
                 </div>
@@ -91,7 +86,7 @@ export function WithdrawModal({
                 <div className="text-right mt">
                   <Button
                     disabled={formState !== "valid" || loading}
-                    onClick={() => approve({ amount })}
+                    onClick={() => approveWithdraw({ amount })}
                   >
                     Continue
                   </Button>
